@@ -1,7 +1,19 @@
 # Helper functions
-sameSense(pra::Int, ra::Int) = mod(pra,2)==mod(ra,2)
-downSense(ra::Int) = (ra>0) .& (mod(ra,2)==1)
-upSense(ra::Int) = (ra>0) .& (mod(ra,2)==0)
+
+# Note: this function is sort of wrong for COC
+# (but I do not plan to use it for COC)
+function sameSense(pra::Int, ra::Int)
+    ss = true
+    if pra == DND
+        ss = ra == DND ? true : false
+    elseif ra == DND
+        ss = pra == DND ? true : false
+    end
+    return ss
+end
+
+downSense(ra::Int) = ra == DND
+upSense(ra::Int) = (ra > COC) .& ra != DND
 
 # Reward function for VerticalCAS MDP
 function POMDPs.reward(mdp::VerticalCAS_MDP, s::stateType, ra::actType)
@@ -22,15 +34,15 @@ function POMDPs.reward(mdp::VerticalCAS_MDP, s::stateType, ra::actType)
 
     if ra>COC
         if pra>COC
-            reversal = mod(pra,2)!=mod(ra,2)
+            reversal = !sameSense(pra, ra)
         end
         if !reversal
             weakening = pra>ra
             strengthening = pra<ra
         end
         vLow, vHigh = mdp.velRanges[ra]
-        corrective = (vown>vLow) .& (vown < vHigh)
-        preventitive = !corrective
+        corrective = (vown>vLow) .& (vown < vHigh) # Not already following
+        preventitive = !corrective # Already following
         if corrective
             if downSense(ra)
                 deltaVown = abs(vLow-vown)
@@ -39,7 +51,7 @@ function POMDPs.reward(mdp::VerticalCAS_MDP, s::stateType, ra::actType)
             end
         end
     end
-    lolo = (ra==DNC) .| (ra==DND)
+    lolo = (ra==DNC) .| (ra==DND) # Level-off, Level-off
 
     if (sep<=175) .& (tau==0)
         r-=1.0*2.0 # collision penalty
@@ -49,7 +61,7 @@ function POMDPs.reward(mdp::VerticalCAS_MDP, s::stateType, ra::actType)
         r-=0.1
     end
 
-    if (sepTau0<=300) .& (ra==COC) .& (tau<15)
+    if (sepTau0<=200) .& (ra==COC) .& (tau<15) # SMK changed 300 to 200
         r-= (15.0-tau)/15.0
     end
 
@@ -66,16 +78,16 @@ function POMDPs.reward(mdp::VerticalCAS_MDP, s::stateType, ra::actType)
             r-=0.01
         end
     end
-    if corrective
+    if corrective """ These numbers still might be too big """
         r-=1e-5
-        if (sep>650) .& (closure<2000.0/60.0)
+        if (sep>450) .& (closure<1000.0/60.0) # SMK decreased numbers (were 650 and 2000)
             r-= 0.1
         end
-        if (sep>1000) .& (closure<4000.0/60.0)
+        if (sep>600) .& (closure<2000.0/60.0) # were 1000 abd 4000
             r-=0.03
         end
     elseif preventitive
-        if (sep>650) .& (closure<2000.0/60.0)
+        if (sep>450) .& (closure<1000.0/60.0) # were 650 and 2000
             r-=0.01
         end
     end
@@ -95,20 +107,20 @@ function POMDPs.reward(mdp::VerticalCAS_MDP, s::stateType, ra::actType)
     end
     if lolo
         r-=1e-4
-        if closure > 3000.0/60.0
+        if closure > 800.0/60.0 # was 3000
             r-=5e-4
         end
-    elseif (ra!=COC) .& (closure > 3000.0/60.0)
+    elseif (ra!=COC) .& (closure > 800.0/60.0) # was 3000
         r-=1.5e-3
     end
-    if closure < 3000.0/60.0
+    if closure < 800.0/60.0 # was 3000
         r-=2.3e-3
     end
     if ra==COC
         r+=1e-9
     else
         r-=3e-5*deltaVown
-        if closure > 3000.0/60.0
+        if closure > 800.0/60.0 # was 3000
             r-=1.5e-3
         end
     end

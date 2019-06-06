@@ -26,9 +26,9 @@ end
 # Dynamic equations
 function dynamics(h::Float64,vown::Float64,vint::Float64,ownAccel::Float64, intAccel::Float64, ra::Int, mdp::VerticalCAS_MDP)
     vLow, vHigh = mdp.velRanges[ra]
-    if (vLow >= vown) .| (vHigh <= vown)
+    if (vLow >= vown) .| (vHigh <= vown) # Compliant velocity
         ownAccel = 0
-    elseif vLow > vown + ownAccel
+    elseif vLow > vown + ownAccel # 
         ownAccel = vLow-vown
     elseif vHigh < vown + ownAccel
         ownAccel = vHigh-vown

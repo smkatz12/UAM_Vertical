@@ -19,7 +19,7 @@ upSense(ra::Int) = (ra > COC) .& ra != DNC
 function POMDPs.reward(mdp::VerticalCAS_MDP, s::stateType, ra::actType)
     h, vown, vint, pra = s[1], s[2], s[3], s[4]
     tau = mdp.currentTau
-    r == 0
+    r = 0
     sep = abs(h)
 
     # Penalize nmac

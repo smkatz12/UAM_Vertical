@@ -73,57 +73,19 @@ function POMDPs.reward(mdp::VerticalCAS_MDP, s::stateType, ra::actType)
         r-=10.0
     end
 
-    # if crossing
-    #     if sep>500
-    #         r-=0.01
-    #     end
-    # end
-    
-    # if corrective """ These numbers still might be too big """
-    #     r-=1e-5
-    #     if (sep>450) .& (closure<1000.0/60.0) # SMK decreased numbers (were 650 and 2000)
-    #         r-= 0.1
-    #     end
-    #     if (sep>600) .& (closure<2000.0/60.0) # were 1000 abd 4000
-    #         r-=0.03
-    #     end
-    # elseif preventitive
-    #     if (sep>450) .& (closure<1000.0/60.0) # were 650 and 2000
-    #         r-=0.01
-    #     end
-    # end
     if reversal
         r-= 8e-3 *4.0 # Reversal penalty
-        
-        #### NEW! Penalize reversals in NMAC region - with pilot delay, better to be consistent
-        # if sep<100
-        #     r-=1.0
-        # end
     end
-    if strengthening
-        r-=5e-3
-    end
-    if weakening
-        r-=1e-3
-    end
-    # if lolo
-    #     r-=1e-4
-    #     if closure > 800.0/60.0 # was 3000
-    #         r-=5e-4
-    #     end
-    # elseif (ra!=COC) .& (closure > 800.0/60.0) # was 3000
-    #     r-=1.5e-3
+    # if strengthening
+    #     r-=5e-3
     # end
-    # if closure < 800.0/60.0 # was 3000
-    #     r-=2.3e-3
+    # if weakening
+    #     r-=1e-3
     # end
     if ra==COC
         r+=1e-9
     else
         r-=3e-5*deltaVown
-        # if closure > 800.0/60.0 # was 3000
-        #     r-=1.5e-3
-        # end
     end
     return r
 end

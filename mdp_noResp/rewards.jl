@@ -17,76 +17,24 @@ upSense(ra::Int) = (ra > COC) .& ra != DNC
 
 # Reward function for VerticalCAS MDP
 function POMDPs.reward(mdp::VerticalCAS_MDP, s::stateType, ra::actType)
-    h = s[1]; vown = s[2]; vint = s[3]; pra = s[4]
+    h, vown, vint, pra = s[1], s[2], s[3], s[4]
     tau = mdp.currentTau
-    r = 0.0
+    r == 0
     sep = abs(h)
-    closure = abs(vint-vown)
-    crossing = ((h<0) .& downSense(ra)) .| ((h>0) .& upSense(ra))
-    deltaVown = 0.0
-    corrective = false
-    preventitive = false
-    weakening = false
-    strengthening = false
-    reversal = false
 
-    sepTau0 = abs(h + tau * (vint-vown))
-
-    if ra>COC
-        if pra>COC
-            reversal = !sameSense(pra, ra)
-        end
-        if !reversal
-            weakening = pra>ra
-            strengthening = pra<ra
-        end
-        vLow, vHigh = mdp.velRanges[ra]
-        corrective = (vown>vLow) .& (vown < vHigh) # Not already following
-        preventitive = !corrective # Already following
-        if corrective
-            if downSense(ra)
-                deltaVown = abs(vLow-vown)
-            else
-                deltaVown = abs(vHigh-vown)
-            end
-        end
-    end
-    lolo = (ra==DNC) .| (ra==DND) # Level-off, Level-off
-
-    """NMAC"""
+    # Penalize nmac
     if (sep<=175) .& (tau==0)
-        r-=1.0*2.0 # collision penalty
-    end
-    
-    """Not alerting when close"""
-    if (sep<=100) .& (tau<10) .& (ra==COC)
-        r-=0.1
+        r -= 1.0
     end
 
-    """Not alerting when close - relaxed"""
-    if (sepTau0<=200) .& (ra==COC) .& (tau<15) # SMK changed 300 to 200
-        r-= (15.0-tau)/15.0
+    if ra == DNC .| ra == DND
+        r -= 1e-5
+    elseif ra == CL250
+        r -= 2e-5
+    elseif ra == SCL450
+        r -= 2.5e-5
     end
 
-    """Illegal transition"""
-    if mdp.allowedTrans[pra][ra+1]==0
-        r-=10.0
-    end
-
-    if reversal
-        r-= 8e-3 *4.0 # Reversal penalty
-    end
-    # if strengthening
-    #     r-=5e-3
-    # end
-    # if weakening
-    #     r-=1e-3
-    # end
-    if ra==COC
-        r+=1e-9
-    else
-        r-=3e-5*deltaVown
-    end
     return r
 end
 

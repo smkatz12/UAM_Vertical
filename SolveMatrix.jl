@@ -10,7 +10,7 @@
 
 
 ### OPTIONS ###
-saveFile = "/raid/kjulian3/VertCAS/Qtables/VertCAS_noResp_test.h5"
+saveFile = "/scratch/smkatz/test.h5"
 nTau0=10   # Number of seconds at tau=0
 maxTau=40  # Max tau value
 ###############

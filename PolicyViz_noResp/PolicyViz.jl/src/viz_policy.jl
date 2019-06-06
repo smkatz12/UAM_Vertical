@@ -1,4 +1,4 @@
-export viz_policy, get_belief
+#export viz_policy, get_belief
 
 function get_belief(pstate::Vector{Float64}, grid::RectangleGrid,interp::Bool=false)
     belief = spzeros(nstates, 1)
@@ -56,7 +56,7 @@ function viz_policy(Q)
         on_cost = 0.0
         
         # Get previous RA index
-        pra = findall(pra.==action_names)[1]
+        pra = find(pra.==action_names)[1]
         
         # Q Table Heat Map
         function get_heat1(x::Float64, y::Float64)

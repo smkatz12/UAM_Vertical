@@ -1,4 +1,4 @@
-export COC,DNC,DND,CL200,SCL450,stateType,actType,acts,discount_f,hMin,hMax,hs,
+export COC,DNC,DND,CL250,SCL450,stateType,actType,acts,discount_f,hMin,hMax,hs,
        vMin,vMax,vowns,vints,interp,accels,velRanges,allowedTrans
 
 # General constants
@@ -49,15 +49,15 @@ accels = Dict(COC=>([0.34, 0.33, 0.33],[0.0, -0.05g, 0.05g]),
               -1=>([0.34,0.33,0.33],[0, -0.05g, 0.05g])) # -1 => intruder accels
 
 # Velocity range where aircraft is NON-compliant with advisory (ft/s)
-velRanges = Dict(COC=>(-500.0fpm2mps, 500.0fpm2mps),
-                DNC=>(0.0, 500.0fpm2mps),
-                DND=>(-500.0fpm2mps, 0.0),
-                CL250=>(-500.0fpm2mps, 250fpm2mps),
-                SCL450=>(-500.0fpm2mps, 450fpm2mps))
+velRanges = Dict(COC=>(-500.0fpm2fps, 500.0fpm2fps),
+                DNC=>(0.0, 500.0fpm2fps),
+                DND=>(-500.0fpm2fps, 0.0),
+                CL250=>(-500.0fpm2fps, 250fpm2fps),
+                SCL450=>(-500.0fpm2fps, 450fpm2fps))
 
 # Allowed transitions between advisories
 allowedTrans = Dict(COC=>[1,1,1,1,1,0,0,0,0],
                    DNC=>[1,1,1,1,1,0,0,0,0],
                    DND=>[1,1,1,1,1,0,0,0,0],
-                   CL200=>[1,1,1,1,1,1,1,0,0],
+                   CL250=>[1,1,1,1,1,1,1,0,0],
                    SCL450=>[1,1,1,1,1,1,1,1,1])

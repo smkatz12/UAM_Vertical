@@ -20,18 +20,14 @@ function viz_policy(Q)
     ra_1 = RGB(1.,1.,1.) # white
     ra_2 = RGB(.0,1.0,1.0) # cyan
     ra_3 = RGB(144.0/255.0,238.0/255.0,144.0/255.0) # lightgreen
-    ra_4 = RGB(30.0/255.0,144.0/255.0,1.0) # dodgerblue
-    ra_5 = RGB(0.0,1.0,.0) # lime
-    ra_6 = RGB(0.0,0.0,1.0) # blue
-    ra_7 = RGB(34.0/255.0,139.0/255.0,34.0/255.0) # forestgreen
-    ra_8 = RGB(0.0,0.0,128.0/255.0) # navy
-    ra_9 = RGB(0.0,100.0/255.0,0.0) # darkgreen
-    colors = [ra_1;ra_2;ra_3;ra_4;ra_5;ra_6;ra_7;ra_8;ra_9]
+    ra_4 = RGB(0.0,1.0,.0) # lime
+    ra_5 = RGB(34.0/255.0,139.0/255.0,34.0/255.0) # forestgreen
+    colors = [ra_1;ra_2;ra_3;ra_4;ra_5]
     bg_colors = [RGB(1.0,1.0,1.0)]
     
     # Create scatter plot classes for color key
     sc_string = "{"
-    for i=1:9
+    for i=1:5
         define_color("ra_$i",  colors[i])
         if i==1
             sc_string *= "ra_$i={mark=square, style={black, mark options={fill=ra_$i}, mark size=6}},"
@@ -42,9 +38,9 @@ function viz_policy(Q)
     
     # Color key as a scatter plot
     sc_string=sc_string[1:end-1]*"}"
-    xx = [-1.5,-1.5,-1.5, -1.5, -1.5, -1.5, -1.5, 0.4 ,.4,]
-    yy = [1.65,1.15,0.65, 0.15, -0.35, -0.85, -1.35, 1.65, 1.15]
-    zz = ["ra_1","ra_2","ra_3","ra_4","ra_5","ra_6","ra_7","ra_8","ra_9"]
+    xx = [-1.5, -1.5, -1.5, -1.5, -1.5]
+    yy = [1.65, 1.15, 0.65, 0.15, -0.35]
+    zz = ["ra_1","ra_2","ra_3","ra_4","ra_5"]
     sc = string(sc_string)
 
     # Set up interactive display
@@ -91,12 +87,8 @@ function viz_policy(Q)
                 Plots.Node("RA 1: COC ",0.15,0.915,style="black,anchor=west", axis="axis description cs"),
                 Plots.Node("RA 2: DNC ",0.15,0.790,style="black,anchor=west", axis="axis description cs"),
                 Plots.Node("RA 3: DND",0.15,0.665,style="black,anchor=west", axis="axis description cs"),
-                Plots.Node("RA 4: DES15000",0.15,0.540,style="black,anchor=west", axis="axis description cs"),
-                Plots.Node("RA 5: CL1500 ",0.15,0.415,style="black,anchor=west", axis="axis description cs"),
-                Plots.Node("RA 6: SDES1500",0.15,0.290,style="black,anchor=west", axis="axis description cs"),
-                Plots.Node("RA 7: SCL1500",0.15,0.165,style="black,anchor=west", axis="axis description cs"),
-                Plots.Node("RA 8:  SDES2500",0.63,0.915,style="black,anchor=west", axis="axis description cs"),
-                Plots.Node("RA 9:  SCL2500",0.63,0.790,style="black,anchor=west", axis="axis description cs"),
+                Plots.Node("RA 4: CL250",0.15,0.540,style="black,anchor=west", axis="axis description cs"),
+                Plots.Node("RA 5: SCL450 ",0.15,0.415,style="black,anchor=west", axis="axis description cs"),
                 ],width="10cm",height="8cm", hideAxis =true, title="KEY"))
         end
     end

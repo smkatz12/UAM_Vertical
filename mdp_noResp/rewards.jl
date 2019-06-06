@@ -4,16 +4,16 @@
 # (but I do not plan to use it for COC)
 function sameSense(pra::Int, ra::Int)
     ss = true
-    if pra == DND
-        ss = ra == DND ? true : false
-    elseif ra == DND
-        ss = pra == DND ? true : false
+    if pra == DNC
+        ss = ra == DNC ? true : false
+    elseif ra == DNC
+        ss = pra == DNC ? true : false
     end
     return ss
 end
 
-downSense(ra::Int) = ra == DND
-upSense(ra::Int) = (ra > COC) .& ra != DND
+downSense(ra::Int) = ra == DNC
+upSense(ra::Int) = (ra > COC) .& ra != DNC
 
 # Reward function for VerticalCAS MDP
 function POMDPs.reward(mdp::VerticalCAS_MDP, s::stateType, ra::actType)

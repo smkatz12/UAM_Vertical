@@ -28,11 +28,11 @@ function POMDPs.reward(mdp::VerticalCAS_MDP, s::stateType, ra::actType)
     end
 
     if ra == DNC || ra == DND
-        r -= 1e-5
+        r -= 1e-3
     elseif ra == CL250
-        r -= 2e-5
+        r -= 2e-3
     elseif ra == SCL450
-        r -= 2.5e-5
+        r -= 2.5e-3
     end
 
     return r

@@ -60,17 +60,19 @@ function viz_policy(Q)
         
         # Q Table Heat Map
         function get_heat1(x::Float64, y::Float64)
+            #println("x: $x, y: $y")
             tau = x 
             relh = y
             bel = get_belief([relh,dh0,dh1,pra,tau],grid,false)
             qvals = Q[:,bel.rowval[1]]
+            #println("action_ind: $(actions[findmax(qvals)[2]])")
             return actions[findmax(qvals)[2]]
         end # function get_heat1
 
         #Plot table or neural network policies if possible
         g = GroupPlot(2, 1, groupStyle = "horizontal sep=3cm")
         push!(g, Axis([
-            Plots.Image(get_heat1, (xmin, xmax), (ymin, ymax), zmin = 1, zmax = 9,
+            Plots.Image(get_heat1, (xmin, xmax), (ymin, ymax), zmin = 1, zmax = 5,
             xbins = nbin, ybins = nbin, colormap = ColorMaps.RGBArrayMap(colors), colorbar=false),
             ], xmin=xmin, xmax=xmax, ymin=ymin,ymax=ymax, width="10cm", height="8cm", 
                xlabel="Tau (s)", ylabel="Relative Alt (ft)", title="Table Advisories"))

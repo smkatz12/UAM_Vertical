@@ -23,11 +23,11 @@ function POMDPs.reward(mdp::VerticalCAS_MDP, s::stateType, ra::actType)
     sep = abs(h)
 
     # Penalize nmac
-    # if (sep <= 175) .& (tau == 0)
-    #     r -= 1.0
-    # end
+    if (sep <= 175) && (tau == 0)
+        r -= 1.0
+    end
 
-    if ra == DNC .| ra == DND
+    if ra == DNC || ra == DND
         r -= 1.0
     elseif ra == CL250
         r -= 2e-5

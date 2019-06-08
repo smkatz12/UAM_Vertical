@@ -37,7 +37,12 @@ function POMDPs.reward(mdp::VerticalCAS_MDP, s::stateType, ra::actType)
 
     # Penalize reversals and strengthings
     reversal = !sameSense(pra, ra)
-    strengthening = (!reversal && ra != COC) ? pra < ra : false
+    strengthening = !reversal ? (pra < ra) : false
+
+    if ra != COC
+        strengthening ? r -= 0.009 : nothing
+        reversal ? r -= 0.01 : nothing
+    end
 
     if mdp.allowedTrans[pra][ra+1]==0
         r-=10.0

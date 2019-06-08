@@ -12,7 +12,7 @@
 ### OPTIONS ###
 saveFile = "/scratch/smkatz/test.h5"
 nTau0=10   # Number of seconds at tau=0
-maxTau=120  # Max tau value
+maxTau=100  # Max tau value
 ###############
 
 @everywhere function compute_helper(states,n_states,mdps,grid,a)

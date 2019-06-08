@@ -56,8 +56,8 @@ velRanges = Dict(COC=>(-500.0fpm2fps, 500.0fpm2fps),
                 SCL450=>(-500.0fpm2fps, 450fpm2fps))
 
 # Allowed transitions between advisories
-allowedTrans = Dict(COC=>[1,1,1,1,1,0,0,0,0],
-                   DNC=>[1,1,1,1,1,0,0,0,0],
-                   DND=>[1,1,1,1,1,0,0,0,0],
-                   CL250=>[1,1,1,1,1,1,1,0,0],
-                   SCL450=>[1,1,1,1,1,1,1,1,1])
+allowedTrans = Dict(COC=>[1,1,1,1,0],
+                   DNC=>[1,1,1,1,0],
+                   DND=>[1,1,1,1,0],
+                   CL250=>[1,1,1,1,1],
+                   SCL450=>[1,1,1,1,1])

@@ -47,7 +47,7 @@ function viz_policy(Q)
     @manipulate for nbin = 100,
         savePlot = [false,true],
         xmin = 0.0,
-        xmax = 40.0,
+        xmax = 120.0,
         ymin = -600.0,
         ymax = 600.0,
         dh0 = 0.0, 

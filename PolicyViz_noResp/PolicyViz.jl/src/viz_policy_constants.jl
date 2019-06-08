@@ -9,7 +9,7 @@ relhs = vcat(linspace(-600,-400,5),linspace(-360,-200,5),linspace(-180,0,10),
               linspace(20,200,10),linspace(240,400,5),linspace(450,600,4))
 dh0s = vels
 dh1s = vels
-taus  = linspace(0,40,41)
+taus  = linspace(0,120,121)
 pas = [1,2,3,4,5]
 
 # Number of states

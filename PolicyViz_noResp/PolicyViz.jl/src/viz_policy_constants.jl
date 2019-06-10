@@ -13,7 +13,7 @@ taus  = linspace(0,100,101)
 pas = [1,2,3,4,5]
 
 # Number of states
-nstates = length(relhs)*length(dh0s)*length(taus)*length(dh1s)*length(taus)
+nstates = length(relhs)*length(dh0s)*length(dh1s)*length(pas)*length(taus)
 
 # Actions
 actions = [1, 2, 3, 4, 5]

@@ -22,6 +22,7 @@ function POMDPs.reward(mdp::VerticalCAS_MDP, s::stateType, ra::actType)
     tau = mdp.currentTau
     r = 0
     sep = abs(h)
+    sepTau0 = abs(h + tau * (vint-vown))
 
     # Penalize nmac
     # if (sep <= 100) && (tau == 0)

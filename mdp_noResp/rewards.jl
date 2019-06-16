@@ -34,8 +34,8 @@ function POMDPs.reward(mdp::VerticalCAS_MDP, s::stateType, ra::actType)
     end
 
     # Penalize closeness
-    if (sep <= 125) && (tau < 15)
-        r -= 1.0
+    if (sepTau0<=150) .& (ra==COC) .& (tau<15) # SMK changed 300 to 200
+        r-= (15.0-tau)/15.0
     end
 
     # Penalize alert and reward COC

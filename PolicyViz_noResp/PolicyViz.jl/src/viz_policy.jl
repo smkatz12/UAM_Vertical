@@ -17,11 +17,18 @@ function viz_policy(Q)
     grid = RectangleGrid(relhs,dh0s,dh1s,actions,taus)
     
     # Colors
+    # ra_1 = RGB(1.,1.,1.) # white
+    # ra_2 = RGB(.0,1.0,1.0) # cyan
+    # ra_3 = RGB(144.0/255.0,238.0/255.0,144.0/255.0) # lightgreen
+    # ra_4 = RGB(0.0,1.0,.0) # lime
+    # ra_5 = RGB(34.0/255.0,139.0/255.0,34.0/255.0) # forestgreen
+
     ra_1 = RGB(1.,1.,1.) # white
-    ra_2 = RGB(.0,1.0,1.0) # cyan
-    ra_3 = RGB(144.0/255.0,238.0/255.0,144.0/255.0) # lightgreen
-    ra_4 = RGB(0.0,1.0,.0) # lime
-    ra_5 = RGB(34.0/255.0,139.0/255.0,34.0/255.0) # forestgreen
+    ra_2 = RGB(255.0/255.0,153.0/255.0,153.0/255.0) # light red
+    ra_3 = RGB(153.0/255.0,204.0/255.0,255.0/255.0) # light blue
+    ra_4 = RGB(51.0/255.0,153.0/255.0,255.0/255.0) # blue
+    ra_5 = RGB(1.0/255.0,88.0/255.0,202.0/255.0) # dark blue
+
     colors = [ra_1;ra_2;ra_3;ra_4;ra_5]
     bg_colors = [RGB(1.0,1.0,1.0)]
     

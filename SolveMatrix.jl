@@ -11,7 +11,8 @@
 
 ### OPTIONS ###
 saveFile = "/scratch/smkatz/test.h5"
-nTau0=10   # Number of seconds at tau=0
+binFile = "/home/smkatz/Documents/Airbus/XrSim/data_files/test.bin"
+nTau0=30   # Number of seconds at tau=0
 maxTau=100  # Max tau value
 ###############
 
@@ -154,3 +155,12 @@ println("Writing Qvalues")
 h5open(saveFile, "w") do file
     write(file, "q", Q_out) 
 end
+
+s = open(binFile, "w")
+# Write the dimensions of the array at the start of the file
+for j = 1:ndims(Q_out)
+    write(s, size(Q_out, j))
+end
+# Write the values
+write(s, Q_out)
+close(s)

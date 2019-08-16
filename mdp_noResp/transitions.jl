@@ -10,9 +10,11 @@ function POMDPs.transition(mdp::VerticalCAS_MDP, s::stateType, ra::actType)
 
     # Compute probabilities of next states using sigma point sampling
     ownProbs, ownAccels = mdp.accels[pra]
+    #ownProbs, ownAccels = mdp.accels[ra]
     intProbs, intAccels = mdp.accels[-1]
     for i = 1:3
         for j = 1:3
+            #next_h,next_vown,next_vint = dynamics(h,vown,vint,ownAccels[i],intAccels[j],pra,mdp)
             next_h,next_vown,next_vint = dynamics(h,vown,vint,ownAccels[i],intAccels[j],pra,mdp)
             nextStates[ind] = (next_h,next_vown,next_vint,next_pra)
             nextProbs[ind]  = ownProbs[i]*intProbs[j]
@@ -27,7 +29,9 @@ end
 function dynamics(h::Float64,vown::Float64,vint::Float64,ownAccel::Float64, intAccel::Float64, ra::Int, mdp::VerticalCAS_MDP)
     vLow, vHigh = mdp.velRanges[ra]
     if (vLow >= vown) .| (vHigh <= vown) # Compliant velocity
-        ownAccel = 0
+        if ra != DNC || abs(ownAccel) > 0.1g
+            ownAccel = 0
+        end
     elseif vLow > vown + ownAccel # 
         ownAccel = vLow-vown
     elseif vHigh < vown + ownAccel

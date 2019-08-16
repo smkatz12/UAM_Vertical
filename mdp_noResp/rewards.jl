@@ -30,18 +30,19 @@ function POMDPs.reward(mdp::VerticalCAS_MDP, s::stateType, ra::actType)
     # end
 
     # Penalize nmac
-    if (sep <= 100) && (tau < 5)
+    if (sep <= 100) && (tau < 2)
         r -= 1.0
     end
 
     # Penalize closeness
-    if (sepTau0<=150) .& (ra==COC) .& (tau<15) # SMK changed 300 to 200
+    #if (sepTau0<=150) .& (ra==COC) .& (tau<15) # SMK changed 300 to 200
+    if (sepTau0<=150) .& (tau<15) # SMK changed 300 to 200
         r-= (15.0-tau)/15.0
     end
 
     # Penalize alert and reward COC
     if ra != COC
-        r -= 0.01
+        r -= 0.01 # Changed from 0.01 12:36pm 8/16
     else
         r += 1e-4
     end
@@ -54,6 +55,11 @@ function POMDPs.reward(mdp::VerticalCAS_MDP, s::stateType, ra::actType)
         strengthening ? r -= 0.009 : nothing
         #reversal ? r -= 0.01 : nothing
     end
+
+    # NEW: penalize going back to COC
+    # if pra != COC && ra == COC
+    #     r -= 0.5
+    # end
 
     if mdp.allowedTrans[pra][ra+1]==0
         r-=10.0

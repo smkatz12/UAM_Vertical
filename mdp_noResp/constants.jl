@@ -41,7 +41,7 @@ interp = LocalGIFunctionApproximator(RectangleGrid(hs,vowns,vints,acts))
 # Tuple of probabilities and corresponding acceleration in ft/s^2
 probs = [0.5,0.3,0.2] #[0.5,0.25,0.25]
 g = 32.2
-accels = Dict(COC=>([0.34, 0.33, 0.33],[0.0, -0.05g, 0.05g]),
+accels = Dict(COC=>([0.34, 0.33, 0.33],[0.0, -0.075g, 0.075g]),#[0.0, -0.05g, 0.05g]),
               DNC=>(probs,[-0.1g, -0.15g, -0.2g]),
               DND=>(probs,[0.1g, 0.15g, 0.2g]),
               CL250=>(probs,[0.1g, 0.15g, 0.2g]),

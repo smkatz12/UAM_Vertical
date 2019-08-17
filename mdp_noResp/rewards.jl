@@ -53,7 +53,7 @@ function POMDPs.reward(mdp::VerticalCAS_MDP, s::stateType, ra::actType)
 
     if ra != COC
         strengthening ? r -= 0.009 : nothing
-        reversal ? r -= 0.01 : nothing
+        #reversal ? r -= 0.01 : nothing
     end
 
     # NEW: penalize going back to COC

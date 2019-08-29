@@ -12,7 +12,7 @@
 ### OPTIONS ###
 saveFile = "/scratch/smkatz/test.h5"
 binFile = "/home/smkatz/Documents/Airbus/XrSim/data_files/test.bin"
-nTau0=30   # Number of seconds at tau=0
+nTau0=10   # Number of seconds at tau=0
 maxTau=100  # Max tau value
 ###############
 

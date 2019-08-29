@@ -8,11 +8,12 @@ mutable struct VerticalCAS_MDP <: MDP{stateType, actType}
     pras::Array{Int64,1}
     discount_factor::Float64
     accels::Dict{Int,Tuple{Vector{Float64},Vector{Float64}}}
+    accels_compliant::Dict{Int,Tuple{Vector{Float64},Vector{Float64}}}
     velRanges::Dict{Int,Tuple{Float64,Float64}}
     allowedTrans::Dict{Int,Vector{Int}}
     currentTau::Float64
 end
-VerticalCAS_MDP() = VerticalCAS_MDP(hs,vowns,vints,acts,discount_f,accels,velRanges,allowedTrans,0.0)
+VerticalCAS_MDP() = VerticalCAS_MDP(hs,vowns,vints,acts,discount_f,accels,accels_compliant,velRanges,allowedTrans,0.0)
 
 # Define necessary functions for VerticalCAS MDP
 POMDPs.actionindex(::VerticalCAS_MDP, a::actType) = a + 1

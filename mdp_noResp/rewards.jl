@@ -13,7 +13,7 @@ function sameSense(pra::Int, ra::Int)
 end
 
 downSense(ra::Int) = ra == DNC
-upSense(ra::Int) = (ra > COC) .& ra != DNC
+upSense(ra::Int) = (ra > COC) .& (ra != DNC)
 
 
 # Reward function for VerticalCAS MDP
@@ -42,19 +42,32 @@ function POMDPs.reward(mdp::VerticalCAS_MDP, s::stateType, ra::actType)
 
     # Penalize alert and reward COC
     if ra != COC
-        r -= 0.01 # Changed from 0.01 12:36pm 8/16
+        r -= alert_pens[ra+1] # 0.01 # Changed from 0.01 12:36pm 8/16
     else
         r += 1e-4
     end
 
     # Penalize reversals and strengthings
-    reversal = !sameSense(pra, ra)
+    reversal = !sameSense(pra, ra) && (pra != COC) && (ra != COC)
     strengthening = !reversal ? (pra < ra) : false
+    weakening = !reversal ? (pra > ra) : false
 
     if ra != COC
         strengthening ? r -= 0.009 : nothing
+        weakening ? r -= 0.009 : nothing
         #reversal ? r -= 0.01 : nothing
     end
+
+    # NEW: penalize crossing
+    # crossing = (h > 0) .& upSense(ra) # || (h < 0 && downSense(ra))
+    # if crossing && (tau < 7) && reversal
+    #     r -= 1.5
+    # end
+
+    # NEW: try penalizing no alert when close
+    # if (ra == COC) && (tau < 15) && (sep <= 150)
+    #     r -= 0.5
+    # end 
 
     # NEW: penalize going back to COC
     # if pra != COC && ra == COC

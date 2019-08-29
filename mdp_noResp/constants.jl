@@ -1,5 +1,5 @@
 export COC,DNC,DND,CL250,SCL450,stateType,actType,acts,discount_f,hMin,hMax,hs,
-       vMin,vMax,vowns,vints,interp,accels,velRanges,allowedTrans
+       vMin,vMax,vowns,vints,interp,accels,accels_compliant,velRanges,allowedTrans, alert_pens
 
 # General constants
 fpm2fps = 1/60
@@ -41,12 +41,40 @@ interp = LocalGIFunctionApproximator(RectangleGrid(hs,vowns,vints,acts))
 # Tuple of probabilities and corresponding acceleration in ft/s^2
 probs = [0.5,0.3,0.2] #[0.5,0.25,0.25]
 g = 32.2
-accels = Dict(COC=>([0.34, 0.33, 0.33],[0.0, -0.075g, 0.075g]),#[0.0, -0.05g, 0.05g]),
-              DNC=>(probs,[-0.1g, -0.15g, -0.2g]),
-              DND=>(probs,[0.1g, 0.15g, 0.2g]),
-              CL250=>(probs,[0.1g, 0.15g, 0.2g]),
-              SCL450=>(probs,[0.1g, 0.15g, 0.2g]),
+accels = Dict(COC=>([0.34, 0.33, 0.33],[0.0, -0.05g, 0.05g]),#[0.0, -0.05g, 0.05g]),
+              DNC=>(probs,[-0.1g, -0.15g, 0.0]),
+              DND=>(probs,[0.1g, 0.15g, 0.0]),
+              CL250=>(probs,[0.1g, 0.15g, 0.0]),
+              SCL450=>(probs,[0.1g, 0.15g, 0.0]),
               -1=>([0.34,0.33,0.33],[0, -0.05g, 0.05g])) # -1 => intruder accels
+
+# accels = Dict(COC=>([0.34, 0.33, 0.33],[0.0, -0.05g, 0.05g]),#[0.0, -0.05g, 0.05g]),
+#               DNC=>(probs,[-0.1g, -0.15g, -0.2g]),
+#               DND=>(probs,[0.1g, 0.15g, 0.2g]),
+#               CL250=>(probs,[0.1g, 0.15g, 0.2g]),
+#               SCL450=>(probs,[0.1g, 0.15g, 0.2g]),
+#               -1=>([0.34,0.33,0.33],[0, -0.05g, 0.05g])) # -1 => intruder accels
+
+# accels_compliant = Dict(COC=>([0.34, 0.33, 0.33],[0.0, -0.075g, 0.075g]),#[0.0, -0.05g, 0.05g]),
+#                         DNC=>([0.2, 0.2, 0.6],[-0.1g, -0.12g, 0.0]),
+#                         DND=>([0.2, 0.2, 0.6],[0.1g, 0.12g, 0.0]),
+#                         CL250=>([0.2, 0.2, 0.6],[-0.02g, 0.02g, 0.0]),
+#                         SCL450=>([0.2, 0.2, 0.6],[-0.02g, 0.02g, 0.0]),
+#                         -1=>([0.34,0.33,0.33],[0, -0.05g, 0.05g])) # -1 => intruder accels
+
+# accels_compliant = Dict(COC=>([0.34, 0.33, 0.33],[0.0, -0.075g, 0.075g]),#[0.0, -0.05g, 0.05g]),
+#                         DNC=>([0.2, 0.2, 0.6],[-0.08g, -0.1g, 0.0]),
+#                         DND=>([0.2, 0.2, 0.6],[0.08g, 0.1g, 0.0]),
+#                         CL250=>([0.2, 0.2, 0.6],[0.08g, 0.1g, 0.0]),
+#                         SCL450=>([0.2, 0.2, 0.6],[0.08g, 0.1g, 0.0]),
+#                         -1=>([0.34,0.33,0.33],[0, -0.05g, 0.05g])) # -1 => intruder accels
+
+accels_compliant = Dict(COC=>([0.34, 0.33, 0.33],[0.0, -0.05g, 0.05g]),#[0.0, -0.05g, 0.05g]),
+                        DNC=>([0.1, 0.3, 0.6],[0.04g, -0.1g, 0.0]),
+                        DND=>([0.1, 0.3, 0.6],[-0.04g, 0.1g, 0.0]),
+                        CL250=>([0.1, 0.3, 0.6],[0.08g, 0.1g, 0.0]),
+                        SCL450=>([0.0, 0.0, 1.0],[0.08g, 0.1g, 0.0]),
+                        -1=>([0.34,0.33,0.33],[0, -0.05g, 0.05g])) # -1 => intruder accels
 
 # Velocity range where aircraft is NON-compliant with advisory (ft/s)
 velRanges = Dict(COC=>(-500.0fpm2fps, 500.0fpm2fps),
@@ -61,3 +89,5 @@ allowedTrans = Dict(COC=>[1,1,1,1,0],
                    DND=>[1,1,1,1,0],
                    CL250=>[1,1,1,1,1],
                    SCL450=>[1,1,1,1,1])
+
+alert_pens = [0.0, 0.001, 0.001, 0.004, 0.01]

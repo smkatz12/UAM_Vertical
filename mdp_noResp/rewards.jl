@@ -42,7 +42,7 @@ function POMDPs.reward(mdp::VerticalCAS_MDP, s::stateType, ra::actType)
 
     # Penalize alert and reward COC
     if ra != COC
-        r -= alert_pens[ra+1] # 0.01 # Changed from 0.01 12:36pm 8/16
+        r -= alert_pens[ra+1]*mdp.factor # 0.01 # Changed from 0.01 12:36pm 8/16
     else
         r += 1e-4
     end
@@ -53,8 +53,8 @@ function POMDPs.reward(mdp::VerticalCAS_MDP, s::stateType, ra::actType)
     weakening = !reversal ? (pra > ra) : false
 
     if ra != COC
-        strengthening ? r -= 0.009 : nothing
-        weakening ? r -= 0.009 : nothing
+        strengthening ? r -= 0.009*mdp.factor : nothing # Get rid of these and set factor to 1.0 for good plot
+        weakening ? r -= 0.009*mdp.factor : nothing # Get rid of these and set factor to 1.0 for good plot
         #reversal ? r -= 0.01 : nothing
     end
 

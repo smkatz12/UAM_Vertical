@@ -1,5 +1,5 @@
-export COC,DNC,DND,CL250,SCL450,stateType,actType,acts,discount_f,hMin,hMax,hs,
-       vMin,vMax,vowns,vints,interp,accels,accels_compliant,velRanges,allowedTrans, alert_pens
+#export COC,DNC,DND,CL250,SCL450,stateType,actType,acts,discount_f,hMin,hMax,hs,
+#       vMin,vMax,vowns,vints,interp,accels,accels_compliant,velRanges,allowedTrans, alert_pens
 
 # General constants
 fpm2fps = 1/60
@@ -90,4 +90,5 @@ allowedTrans = Dict(COC=>[1,1,1,1,0],
                    CL250=>[1,1,1,1,1],
                    SCL450=>[1,1,1,1,1])
 
-alert_pens = [0.0, 0.001, 0.001, 0.004, 0.01]
+#alert_pens = [0.0, 0.004, 0.004, 0.006, 0.01] # was 0.004 for 2 and 3
+alert_pens = [0.0, 0.001, 0.001, 0.004, 0.01] # was 0.004 for 2 and 3

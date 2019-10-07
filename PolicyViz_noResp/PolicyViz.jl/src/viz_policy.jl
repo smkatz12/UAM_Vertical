@@ -23,11 +23,17 @@ function viz_policy(Q)
     # ra_4 = RGB(0.0,1.0,.0) # lime
     # ra_5 = RGB(34.0/255.0,139.0/255.0,34.0/255.0) # forestgreen
 
+    # ra_1 = RGB(1.,1.,1.) # white
+    # ra_2 = RGB(255.0/255.0,153.0/255.0,153.0/255.0) # light red
+    # ra_3 = RGB(153.0/255.0,204.0/255.0,255.0/255.0) # light blue
+    # ra_4 = RGB(51.0/255.0,153.0/255.0,255.0/255.0) # blue
+    # ra_5 = RGB(1.0/255.0,88.0/255.0,202.0/255.0) # dark blue
+
     ra_1 = RGB(1.,1.,1.) # white
-    ra_2 = RGB(255.0/255.0,153.0/255.0,153.0/255.0) # light red
-    ra_3 = RGB(153.0/255.0,204.0/255.0,255.0/255.0) # light blue
-    ra_4 = RGB(51.0/255.0,153.0/255.0,255.0/255.0) # blue
-    ra_5 = RGB(1.0/255.0,88.0/255.0,202.0/255.0) # dark blue
+    ra_2 = RGB(153.0/255.0,204.0/255.0,255.0/255.0) # light blue
+    ra_3 = RGB(255.0/255.0,180.0/255.0,180.0/255.0) # light red
+    ra_4 = RGB(255.0/255.0,91.0/255.0,91.0/255.0) # red
+    ra_5 = RGB(190.0/255.0,0.0/255.0,0.0/255.0) # dark red
 
     colors = [ra_1;ra_2;ra_3;ra_4;ra_5]
     bg_colors = [RGB(1.0,1.0,1.0)]
@@ -54,7 +60,7 @@ function viz_policy(Q)
     @manipulate for nbin = 100,
         savePlot = [false,true],
         xmin = 0.0,
-        xmax = 100.0,
+        xmax = 120.0,
         ymin = -600.0,
         ymax = 600.0,
         dh0 = 0.0, 

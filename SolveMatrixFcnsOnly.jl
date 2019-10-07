@@ -4,18 +4,10 @@
 @everywhere using POMDPs
 @everywhere using SparseArrays
 #@everywhere using VerticalCAS
-@everywhere include("mdp_noResp/VerticalCAS.jl")
+@everywhere include("../UAM_Vertical/mdp_noResp/VerticalCAS.jl")
 @everywhere using HDF5
 @everywhere using POMDPModelTools
 @everywhere using Printf
-
-
-### OPTIONS ###
-saveFile = "/scratch/smkatz/test.h5"
-binFile = "/home/smkatz/Documents/Airbus/XrSim/data_files/test.bin"
-nTau0=10   # Number of seconds at tau=0
-maxTau=120  # Max tau value
-###############
 
 @everywhere function compute_helper(states,n_states,mdps,grid,a)
     # Initialize the row, column and z vectors to be large vectors.
@@ -143,26 +135,3 @@ function computeQ(mdps::Array{Union{MDP, POMDP},1},interp,nTau0)
     end
     return Q_out
 end
-
-mdps = Array{Union{MDP, POMDP},1}()
-for tau = 0:maxTau
-    push!(mdps, VerticalCAS_MDP())
-    mdps[end].currentTau = tau
-    mdps[end].factor = 1.0
-end
-@time Q_out = computeQ(mdps,interp,nTau0)
-
-
-println("Writing Qvalues")
-h5open(saveFile, "w") do file
-    write(file, "q", Q_out) 
-end
-
-s = open(binFile, "w")
-# Write the dimensions of the array at the start of the file
-for j = 1:ndims(Q_out)
-    write(s, size(Q_out, j))
-end
-# Write the values
-write(s, Q_out)
-close(s)
